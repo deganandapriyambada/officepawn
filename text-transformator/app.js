@@ -16,7 +16,7 @@ function Layout() {
         createElement(
             'div',
             { id: "content-container" },
-            [Toggle, OptionParameter, Conversion, OutputVisualization]
+            Toggle, OptionParameter, Conversion, OutputVisualization
         ),
         createElement('div', { id: "footer-container" }, FooterMenu)
     )
