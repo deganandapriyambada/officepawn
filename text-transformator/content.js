@@ -1,7 +1,11 @@
 import { createElement } from 'react';
+import { createToggle } from './sharedcomponents/toggle';
+import { createSeparatorTitle } from './sharedcomponents/separatortitle';
+import { createIcon } from './sharedcomponents/faicon';
+
 
 function toggle() {
-    return createElement('ul', { className: "toggle-container two-col-flex" },
+    return createElement('ul', { className: "toggle-container" },
         toggleList()
     );
 }
@@ -18,16 +22,16 @@ function toggleList() {
         },
         {
             key: 3,
-            value: "Capitalization"
+            value: "Enrichment"
         },
         {
             key: 4,
-            value: "Enrichment"
+            value: "Capitalization"
         },
     ]
     let allToggleElement = [];
     for (var i = 0; i < availableToggle.length; i++) {
-        allToggleElement.push(createElement('li', { key: availableToggle[i].key }, availableToggle[i].value))
+        allToggleElement.push(createElement('li', { key: availableToggle[i].key }, createToggle(availableToggle[i].value)))
     }
     return allToggleElement
 }
@@ -36,21 +40,23 @@ function inputType() {
     let inputType = [
         {
             key: 1,
-            value: "Sentence"
+            value: "Sentence",
+            icon: "font"
         },
         {
             key: 2,
-            value: "Paragraph"
+            value: "Paragraph",
+            icon: "align-justify"
         }
     ]
     const listInputType = inputType.map((item) => {
-        return createElement('li', { key: item.key }, item.value)
+        return createElement('li', { key: item.key }, item.value, createIcon(item.icon))
     });
-    return createElement('ul', null, listInputType);
+    return createElement('ul', { className: "input-type-container" }, listInputType);
 }
 
 function inputText() {
-    return createElement('input', { type: "text" }, null)
+    return createElement('textarea', { className: "inputArea", rows: 5 }, null);
 }
 
 function inputButton() {
@@ -61,15 +67,18 @@ function visualOption() {
     const availableVisualOptions = [
         {
             key: 1,
-            value: "Bold"
+            value: "Bold",
+            icon: "bold"
         },
         {
             key: 2,
-            value: "Italic"
+            value: "Italic",
+            icon: "italic"
         },
         {
             key: 3,
-            value: "Underline"
+            value: "Underline",
+            icon: "underline"
         }
     ]
     const visualOptions = availableVisualOptions.map((item) => {
@@ -82,7 +91,7 @@ function visualOption() {
 
 
 function characterReplacementOptions() {
-    const characterReplacementContainerTitle = createElement('div', null, 'character replacement')
+    const characterReplacementContainerTitle = createElement('div', null, 'character replacement');
     return createElement('div', null, characterReplacementContainerTitle);
 }
 
@@ -122,18 +131,24 @@ function capitalizationSelectBox() {
     const capitalizationOptions = availableCapitalizationOptions.map((item) => {
         return createElement('option', { value: item.key, key: item.key }, item.value)
     })
-
-    return createElement('select', null, capitalizationOptions);
+    const captilizationSelectElement = createElement('select', null, capitalizationOptions);
+    const capitalizationContainerTitle = createElement('div', null, 'Capitalization');
+    const capitalizationContainer = createElement('div', null, capitalizationContainerTitle, captilizationSelectElement)
+    return capitalizationContainer;
 }
 
 function optionParameter() {
     return createElement('div', null,
         inputType(),
         inputText(),
-        visualOption(),
-        characterReplacementOptions(),
-        enrichmentOptions(),
-        capitalizationSelectBox()
+        createSeparatorTitle('Transformation Parameter'),
+        createElement('div', { className: "optionParameterContainer" },
+            visualOption(),
+            characterReplacementOptions(),
+            enrichmentOptions(),
+            capitalizationSelectBox()
+        )
+
     );
 }
 

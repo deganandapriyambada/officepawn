@@ -5,6 +5,7 @@ import { createElement } from 'react';
 import { HeaderMenu } from './header';
 import { Toggle, OptionParameter, Conversion, OutputVisualization } from './content';
 import { FooterMenu } from './footer';
+import { createSeparatorTitle } from './sharedcomponents/separatortitle';
 
 document.body.innerHTML = '<div id="main-container"></div>'
 
@@ -16,7 +17,12 @@ function Layout() {
         createElement(
             'div',
             { id: "content-container" },
-            Toggle, OptionParameter, Conversion, OutputVisualization
+            createSeparatorTitle('Options'),
+            Toggle,
+            createSeparatorTitle('Input Text'),
+            OptionParameter, Conversion,
+            createSeparatorTitle('Transformed Text'),
+            OutputVisualization
         ),
         createElement('div', { id: "footer-container" }, FooterMenu)
     )
