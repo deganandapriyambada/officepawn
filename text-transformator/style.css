@@ -104,3 +104,13 @@ textarea.inputArea {
     display: inline-flex;
     align-items: baseline;
 }
+
+.horizontal-list {
+    margin: 0;
+    padding: 1rem 0 1rem 0;
+}
+
+.horizontal-list li {
+    display: inline-block;
+    padding: 0 0.8rem 0 0;
+}

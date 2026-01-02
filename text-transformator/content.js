@@ -79,12 +79,27 @@ function visualOption() {
             key: 3,
             value: "Underline",
             icon: "underline"
+        },
+        {
+            key: 4,
+            value: "Strikethrough",
+            icon: "strikethrough"
+        },
+        {
+            key: 5,
+            value: "Superscript",
+            icon: "superscript"
+        },
+        {
+            key: 6,
+            value: "Subscript",
+            icon: "subscript"
         }
     ]
     const visualOptions = availableVisualOptions.map((item) => {
-        return createElement('li', { key: item.key }, item.value)
+        return createElement('li', { key: item.key }, createIcon(item.icon))
     });
-    const visualOptionsContainer = createElement('ul', null, visualOptions);
+    const visualOptionsContainer = createElement('ul', { className: "horizontal-list" }, visualOptions);
     const visualOptionsContainerTitle = createElement('div', null, 'visual options')
     return createElement('div', null, visualOptionsContainerTitle, visualOptionsContainer);
 }
