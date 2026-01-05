@@ -114,3 +114,14 @@ textarea.inputArea {
     display: inline-block;
     padding: 0 0.8rem 0 0;
 }
+
+
+.footer-menu {
+    padding: 1rem 0 1rem 0;
+    margin: 0;
+}
+
+.footer-menu li {
+    display: inline-block;
+    padding: 0 0.8rem 0 0;
+}

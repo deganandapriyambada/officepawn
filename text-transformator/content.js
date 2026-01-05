@@ -1,8 +1,9 @@
 import { createElement } from 'react';
-import { createToggle } from './sharedcomponents/toggle';
-import { createSeparatorTitle } from './sharedcomponents/separatortitle';
-import { createIcon } from './sharedcomponents/faicon';
-
+import { createToggle } from './util-components/toggle';
+import { createSeparatorTitle } from './util-components/separatortitle';
+import { createIcon } from './util-components/faicon';
+import { replacementOption } from './reuseable-components/replacement';
+import { enrichmentOption } from "./reuseable-components/enrichment";
 
 function toggle() {
     return createElement('ul', { className: "toggle-container" },
@@ -106,21 +107,30 @@ function visualOption() {
 
 
 function characterReplacementOptions() {
-    const characterReplacementContainerTitle = createElement('div', null, 'character replacement');
-    return createElement('div', null, characterReplacementContainerTitle);
+    let rules = [{
+        key: 1,
+        isActive: false
+    }];
+    const replacementRuleList = rules.map((item) => {
+        return replacementOption(item.key);
+    })
+    const buttonAdd = createElement('button', { type: "submit" }, "Add More Rule");
+    const characterReplacementContainerTitle = createElement('div', null, 'Character replacement');
+    return createElement('div', null, characterReplacementContainerTitle, replacementRuleList, buttonAdd);
 }
 
 function enrichmentOptions() {
     let availableEnrichmentRules = [
         {
-            key: 1,
+            key: 1
         }
     ]
-
+    const characterEnrichmentContainerTitle = createElement('div', null, 'Character Enrichment');
     const enrichmentRules = availableEnrichmentRules.map((item) => {
-        return createElement('li', { key: item.key }, 'rule');
-    })
-    return createElement('ul', null, enrichmentRules)
+        return enrichmentOption(item.key)
+    });
+    const buttonAdd = createElement('button', { type: "submit" }, "Add More Rule");
+    return createElement('div', null, characterEnrichmentContainerTitle, enrichmentRules, buttonAdd);
 
 }
 

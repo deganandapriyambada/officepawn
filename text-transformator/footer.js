@@ -18,7 +18,7 @@ function footerOptions() {
     const listFooterMenu = availableFooterOptions.map((item) => {
         return createElement('li', { key: item.key }, item.value);
     })
-    return createElement('ul', null, listFooterMenu);
+    return createElement('ul', { className: "footer-menu" }, listFooterMenu);
 }
 
 function footerMenu() {

@@ -5,7 +5,7 @@ import { createElement } from 'react';
 import { HeaderMenu } from './header';
 import { Toggle, OptionParameter, Conversion, OutputVisualization } from './content';
 import { FooterMenu } from './footer';
-import { createSeparatorTitle } from './sharedcomponents/separatortitle';
+import { createSeparatorTitle } from './util-components/separatortitle';
 
 document.body.innerHTML = '<div id="main-container"></div>'
 
