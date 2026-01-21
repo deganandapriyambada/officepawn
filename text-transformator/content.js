@@ -1,9 +1,14 @@
-import { createElement } from 'react';
+import { createElement, useState, useEffect } from 'react';
+
+//components
 import { createToggle } from './util-components/toggle';
 import { createSeparatorTitle } from './util-components/separatortitle';
 import { createIcon } from './util-components/faicon';
 import { replacementOption } from './reuseable-components/replacement';
 import { enrichmentOption } from "./reuseable-components/enrichment";
+
+// handler
+import { transformText } from './handlers/transform';
 
 function toggle() {
     return createElement('ul', { className: "toggle-container" },
@@ -56,15 +61,15 @@ function inputType() {
     return createElement('ul', { className: "input-type-container" }, listInputType);
 }
 
-function inputText() {
-    return createElement('textarea', { className: "inputArea", rows: 5 }, null);
-}
 
-function inputButton() {
-    return createElement('button', { type: "submit" }, "Transform")
-}
 
 function visualOption() {
+
+    function checkVisualOption(val, isChecked) {
+        console.log(val);
+        console.log(isChecked);
+    }
+
     const availableVisualOptions = [
         {
             key: 1,
@@ -98,7 +103,18 @@ function visualOption() {
         }
     ]
     const visualOptions = availableVisualOptions.map((item) => {
-        return createElement('li', { key: item.key }, createIcon(item.icon))
+        return createElement('li', { key: item.key }, createElement('input',
+            {
+                type: "checkbox",
+                name: "visual-option",
+                value: item.key,
+                onChange: (e) => {
+                    checkVisualOption(e.target.value, e.target.checked)
+                }
+            },
+            null),
+            createIcon(item.icon)
+        );
     });
     const visualOptionsContainer = createElement('ul', { className: "horizontal-list" }, visualOptions);
     const visualOptionsContainerTitle = createElement('div', null, 'visual options')
@@ -106,72 +122,53 @@ function visualOption() {
 }
 
 
-function characterReplacementOptions() {
-    let rules = [{
-        key: 1,
-        isActive: false
-    }];
-    const replacementRuleList = rules.map((item) => {
-        return replacementOption(item.key);
-    })
-    const buttonAdd = createElement('button', { type: "submit" }, "Add More Rule");
-    const characterReplacementContainerTitle = createElement('div', null, 'Character replacement');
-    return createElement('div', null, characterReplacementContainerTitle, replacementRuleList, buttonAdd);
-}
+
 
 function enrichmentOptions() {
-    let availableEnrichmentRules = [
+
+    const [enrichRules, setEnrichRule] = useState([
         {
             key: 1
         }
-    ]
+    ]);
+
+    function addEnrichRule() {
+        setEnrichRule(
+            (prev) => {
+                return [...prev, {
+                    key: 2
+                }]
+            }
+        )
+    }
+
     const characterEnrichmentContainerTitle = createElement('div', null, 'Character Enrichment');
-    const enrichmentRules = availableEnrichmentRules.map((item) => {
+    const enrichmentRules = enrichRules.map((item) => {
         return enrichmentOption(item.key)
     });
-    const buttonAdd = createElement('button', { type: "submit" }, "Add More Rule");
+    const buttonAdd = createElement('button',
+        {
+            type: "submit",
+            onClick: (e) => {
+                addEnrichRule();
+            }
+        }, "Add More Rule");
     return createElement('div', null, characterEnrichmentContainerTitle, enrichmentRules, buttonAdd);
 
 }
 
-function capitalizationSelectBox() {
-    const availableCapitalizationOptions = [
-        {
-            key: 1,
-            value: "Perfect Case"
-        },
-        {
-            key: 2,
-            value: "CamelCase"
-        },
-        {
-            key: 3,
-            value: "kebab-case"
-        },
-        {
-            key: 4,
-            value: "Sentence case"
-        }
-    ];
-    const capitalizationOptions = availableCapitalizationOptions.map((item) => {
-        return createElement('option', { value: item.key, key: item.key }, item.value)
-    })
-    const captilizationSelectElement = createElement('select', null, capitalizationOptions);
-    const capitalizationContainerTitle = createElement('div', null, 'Capitalization');
-    const capitalizationContainer = createElement('div', null, capitalizationContainerTitle, captilizationSelectElement)
-    return capitalizationContainer;
-}
+
 
 function optionParameter() {
     return createElement('div', null,
         inputType(),
-        inputText(),
+        //inputText(),
         createSeparatorTitle('Transformation Parameter'),
         createElement('div', { className: "optionParameterContainer" },
-            visualOption(),
-            characterReplacementOptions(),
-            enrichmentOptions(),
-            capitalizationSelectBox()
+            //visualOption(),
+            //characterReplacementOptions(),
+            //enrichmentOptions(),
+            //capitalizationSelectBox()
         )
 
     );
@@ -181,11 +178,155 @@ function conversion() {
     return createElement('div', null, inputButton());
 }
 
+// useState
+
+function characterReplacementOptions() {
+    [rules, setRules] = useState([
+        {
+            key: 1,
+            isActive: false
+        }
+    ]);
+
+    function addRules() {
+        setRules((rules) => {
+            return [...rules, {
+                key: 2,
+                isActive: false
+            }];
+        });
+    }
+
+    const replacementRuleList = rules.map((item) => {
+        return replacementOption(item.key);
+    })
+    const buttonAdd = createElement('button',
+        {
+            type: "submit",
+            onClick: (e) => {
+                addRules();
+            }
+        }, "Add More Rule");
+    const characterReplacementContainerTitle = createElement('div', null, 'Character replacement');
+    return createElement('div', null, characterReplacementContainerTitle, replacementRuleList, buttonAdd);
+}
+
+function inputText(props) {
+
+    function getInput(props) {
+        return props.input;
+    }
+
+    function updateInput(props, newInputValue) {
+        props.setInput(newInputValue);
+    }
+
+    return createElement('textarea',
+        {
+            className: "inputArea",
+            rows: 5,
+            placeholder: getInput(props),
+            onChange: (e) => {
+                updateInput(props, e.target.value)
+            }
+        }, null);
+}
+
+
+function capitalizationSelectBox(props) {
+
+    function getCaptilizationSelectedOption(props) {
+        return props.modificationOptions;
+    }
+
+    function setCaptilization(selectedCapitalization, props) {
+        props.setModificationOption((prev) => {
+            return { ...prev, capitalization: selectedCapitalization }
+        })
+
+    }
+
+    const availableCapitalizationOptions = [
+        {
+            key: 1,
+            value: "UPPERCASE"
+        },
+        {
+            key: 2,
+            value: "lowcase"
+        },
+        {
+            key: 3,
+            value: "Perfect Case"
+        },
+        {
+            key: 4,
+            value: "Sentence case"
+        }
+    ];
+    const capitalizationOptions = availableCapitalizationOptions.map((item) => {
+        return createElement('option', { value: item.key, key: item.key }, item.value)
+    })
+    const captilizationSelectElement = createElement('select',
+        {
+            defaultValue: getCaptilizationSelectedOption(props),
+            onChange: (e) => setCaptilization(e.target.value, props)
+
+        }, capitalizationOptions);
+    const capitalizationContainerTitle = createElement('div', null, 'Capitalization');
+    const capitalizationContainer = createElement('div', null, capitalizationContainerTitle, captilizationSelectElement)
+    return capitalizationContainer;
+}
+
+function inputButton(props) {
+
+    function doTransform(props) {
+        let transformedText = transformText(props.input, props);
+        props.setOutput(transformedText);
+    }
+
+    return createElement(
+        'button',
+        {
+            type: "button",
+            onClick: (e) => {
+                doTransform(props)
+            }
+        },
+        "Transform!")
+}
+
+
 function outputVisualization() {
-    return createElement('div', null, 'this is output visualization');
+
+    const listOfModifications = {
+        capitalization: 1
+    }
+
+    const [input, setInput] = useState('Please input any text..!');
+    const [output, setOutput] = useState('Output')
+    const [modificationOptions, setModificationOption] = useState(listOfModifications);
+
+    return createElement('div', { className: "visualizationOutput" },
+        createSeparatorTitle('Input Text'),
+        createElement(inputText, { input, setInput }),
+        createSeparatorTitle('Modification Options'),
+        createElement('div', { className: 'optionParameterContainer' },
+            createElement(capitalizationSelectBox, { modificationOptions, setModificationOption }),
+            createElement(visualOption, { modificationOptions, setModificationOption }),
+            createElement(characterReplacementOptions, { modificationOptions, setModificationOption }),
+            createElement(enrichmentOptions, { modificationOptions, setModificationOption })
+        ),
+        createSeparatorTitle('Action'),
+        createElement(inputButton, { output, setOutput, input, modificationOptions }),
+        createElement('div', null,
+            createSeparatorTitle('Transformed Text'),
+            output
+        )
+    );
 }
 
 export const Toggle = toggle();
 export const OptionParameter = optionParameter();
 export const Conversion = conversion();
-export const OutputVisualization = outputVisualization();
+export const OutputVisualization = outputVisualization;

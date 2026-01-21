@@ -17,12 +17,12 @@ function Layout() {
         createElement(
             'div',
             { id: "content-container" },
-            //createSeparatorTitle('Options'),
-            //Toggle,
-            //createSeparatorTitle('Input Text'),
-            //OptionParameter, Conversion,
-            //createSeparatorTitle('Transformed Text'),
-            createElement(OutputVisualization)
+            createSeparatorTitle('Options'),
+            Toggle,
+            createSeparatorTitle('Input Text'),
+            OptionParameter, Conversion,
+            createSeparatorTitle('Transformed Text'),
+            OutputVisualization
         ),
         createElement('div', { id: "footer-container" }, FooterMenu)
     )
