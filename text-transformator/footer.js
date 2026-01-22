@@ -4,15 +4,7 @@ function footerOptions() {
     const availableFooterOptions = [
         {
             key: 1,
-            value: "About"
-        },
-        {
-            key: 2,
-            value: "Privacy"
-        },
-        {
-            key: 3,
-            value: "Documentations"
+            value: "Copyright  Pipenpoof"
         }
     ];
     const listFooterMenu = availableFooterOptions.map((item) => {

@@ -1,10 +1,10 @@
 import { createElement } from 'react'
 
-export function enrichmentOption(key) {
-    return createElement('div', { key: key }, ruleInputBox('Enrich With'))
+export function enrichmentOption(key, props) {
+    return createElement('div', { key: key }, ruleInputBox('Enrich With', key, props))
 }
 
-function ruleInputBox(label) {
+function ruleInputBox(label, key, props) {
     const position = [
         {
             key: 1,
@@ -15,12 +15,21 @@ function ruleInputBox(label) {
             text: "After"
         }
     ]
-    const positionDropDown = createElement('select', null, position.map((item) => {
-        return createElement('option', { key: item.key }, item.text)
+    const positionDropDown = createElement('select', {
+        name: "position_" + key
+    }, position.map((item) => {
+        return createElement('option', {
+            key: item.key,
+            value: item.key
+        }, item.text)
     }));
-    return createElement('span', null, positionDropDown, ruleInputText(), label, ruleInputText());
+    return createElement('span', null, positionDropDown, ruleInputText(key, props, "target"), label, ruleInputText(key, props, "value"));
 }
 
-function ruleInputText() {
-    return createElement('input', { type: "text" }, null);
+function ruleInputText(key, props, name) {
+    return createElement('input', {
+        type: "text",
+        name: name + "_" + key
+
+    }, null);
 }

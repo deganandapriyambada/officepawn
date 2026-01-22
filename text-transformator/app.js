@@ -3,7 +3,7 @@ import { createElement } from 'react';
 
 // element
 import { HeaderMenu } from './header';
-import { Toggle, OptionParameter, Conversion, OutputVisualization } from './content';
+import { OutputVisualization } from './content';
 import { FooterMenu } from './footer';
 
 document.body.innerHTML = '<div id="main-container"></div>'

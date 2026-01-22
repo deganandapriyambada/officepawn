@@ -62,7 +62,7 @@ function inputType() {
 }
 
 
-function enrichmentOptions() {
+function enrichmentOptions(props) {
 
     const [enrichRules, setEnrichRule] = useState([
         {
@@ -74,15 +74,32 @@ function enrichmentOptions() {
         setEnrichRule(
             (prev) => {
                 return [...prev, {
-                    key: 2
+                    key: prev.length + 1
                 }]
             }
         )
     }
 
+    function removeRules(key) {
+        setEnrichRule((prevRules) =>
+            prevRules.filter((rule, index) => rule.key !== key
+            ));
+    }
+
+    function buttonRemove(key) {
+        return createElement('button',
+            {
+                type: "submit",
+                onClick: (e) => {
+                    removeRules(key);
+                }
+            }, "Remove Rule");
+    }
+
+
     const characterEnrichmentContainerTitle = createElement('div', null, 'Character Enrichment');
     const enrichmentRules = enrichRules.map((item) => {
-        return enrichmentOption(item.key)
+        return createElement('div', { key: item.key }, enrichmentOption(item.key, props), buttonRemove(item.key))
     });
     const buttonAdd = createElement('button',
         {
@@ -118,7 +135,7 @@ function conversion() {
 
 // useState
 
-function characterReplacementOptions() {
+function characterReplacementOptions(props) {
     [rules, setRules] = useState([
         {
             key: 1,
@@ -129,14 +146,32 @@ function characterReplacementOptions() {
     function addRules() {
         setRules((rules) => {
             return [...rules, {
-                key: 2,
+                key: rules.length + 1,
                 isActive: false
             }];
         });
     }
 
+    function removeRules(key) {
+        console.log(key)
+        setRules((prevRules) =>
+            prevRules.filter((rule, index) => rule.key !== key
+            ));
+    }
+
+    function buttonRemove(key) {
+
+        return createElement('button',
+            {
+                type: "submit",
+                onClick: (e) => {
+                    removeRules(key);
+                }
+            }, "Remove Rule");
+    }
+
     const replacementRuleList = rules.map((item) => {
-        return replacementOption(item.key);
+        return createElement('div', { key: item.key }, replacementOption(item.key, props), buttonRemove(item.key));
     })
     const buttonAdd = createElement('button',
         {
@@ -169,7 +204,6 @@ function visualOption(props) {
             props.modificationOptions.visualization.subscript = isChecked;
         }
         props.setModificationOption(toBeModificationOptions);
-        console.log(props.modificationOptions);
     }
 
     const availableVisualOptions = [
