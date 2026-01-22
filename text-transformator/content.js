@@ -62,68 +62,6 @@ function inputType() {
 }
 
 
-
-function visualOption() {
-
-    function checkVisualOption(val, isChecked) {
-        console.log(val);
-        console.log(isChecked);
-    }
-
-    const availableVisualOptions = [
-        {
-            key: 1,
-            value: "Bold",
-            icon: "bold"
-        },
-        {
-            key: 2,
-            value: "Italic",
-            icon: "italic"
-        },
-        {
-            key: 3,
-            value: "Underline",
-            icon: "underline"
-        },
-        {
-            key: 4,
-            value: "Strikethrough",
-            icon: "strikethrough"
-        },
-        {
-            key: 5,
-            value: "Superscript",
-            icon: "superscript"
-        },
-        {
-            key: 6,
-            value: "Subscript",
-            icon: "subscript"
-        }
-    ]
-    const visualOptions = availableVisualOptions.map((item) => {
-        return createElement('li', { key: item.key }, createElement('input',
-            {
-                type: "checkbox",
-                name: "visual-option",
-                value: item.key,
-                onChange: (e) => {
-                    checkVisualOption(e.target.value, e.target.checked)
-                }
-            },
-            null),
-            createIcon(item.icon)
-        );
-    });
-    const visualOptionsContainer = createElement('ul', { className: "horizontal-list" }, visualOptions);
-    const visualOptionsContainerTitle = createElement('div', null, 'visual options')
-    return createElement('div', null, visualOptionsContainerTitle, visualOptionsContainer);
-}
-
-
-
-
 function enrichmentOptions() {
 
     const [enrichRules, setEnrichRule] = useState([
@@ -210,6 +148,81 @@ function characterReplacementOptions() {
     const characterReplacementContainerTitle = createElement('div', null, 'Character replacement');
     return createElement('div', null, characterReplacementContainerTitle, replacementRuleList, buttonAdd);
 }
+
+
+
+function visualOption(props) {
+
+    function checkVisualOption(val, isChecked) {
+        const toBeModificationOptions = { ...props.modificationOptions };
+        if (val == 1) {
+            props.modificationOptions.visualization.bold = isChecked;
+        } else if (val == 2) {
+            props.modificationOptions.visualization.italic = isChecked;
+        } else if (val == 3) {
+            props.modificationOptions.visualization.underline = isChecked;
+        } else if (val == 4) {
+            props.modificationOptions.visualization.strikethrough = isChecked;
+        } else if (val == 5) {
+            props.modificationOptions.visualization.superscript = isChecked;
+        } else if (val == 6) {
+            props.modificationOptions.visualization.subscript = isChecked;
+        }
+        props.setModificationOption(toBeModificationOptions);
+        console.log(props.modificationOptions);
+    }
+
+    const availableVisualOptions = [
+        {
+            key: 1,
+            value: "Bold",
+            icon: "bold"
+        },
+        {
+            key: 2,
+            value: "Italic",
+            icon: "italic"
+        },
+        {
+            key: 3,
+            value: "Underline",
+            icon: "underline"
+        },
+        {
+            key: 4,
+            value: "Strikethrough",
+            icon: "strikethrough"
+        },
+        {
+            key: 5,
+            value: "Superscript",
+            icon: "superscript"
+        },
+        {
+            key: 6,
+            value: "Subscript",
+            icon: "subscript"
+        }
+    ]
+    const visualOptions = availableVisualOptions.map((item) => {
+        return createElement('li', { key: item.key }, createElement('input',
+            {
+                type: "checkbox",
+                name: "visual-option",
+                value: item.key,
+                onChange: (e) => {
+                    checkVisualOption(e.target.value, e.target.checked)
+                }
+            },
+            null),
+            createIcon(item.icon)
+        );
+    });
+    const visualOptionsContainer = createElement('ul', { className: "horizontal-list" }, visualOptions);
+    const visualOptionsContainerTitle = createElement('div', null, 'visual options')
+    return createElement('div', null, visualOptionsContainerTitle, visualOptionsContainer);
+}
+
 
 function inputText(props) {
 
@@ -300,7 +313,30 @@ function inputButton(props) {
 function outputVisualization() {
 
     const listOfModifications = {
-        capitalization: 1
+        capitalization: 1,
+        visualization: {
+            bold: false,
+            italic: false,
+            underline: false,
+            strikethrough: false,
+            superscript: false,
+            subscript: false
+        },
+        replacement: [
+            {
+                key: 1,
+                target: null,
+                value: null
+            }
+        ],
+        enrichment: [
+            {
+                key: 1,
+                position: null,
+                target: null,
+                value: null
+            }
+        ]
     }
 
     const [input, setInput] = useState('Please input any text..!');
