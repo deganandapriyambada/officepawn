@@ -1,6 +1,7 @@
 import { createElement } from "react";
 
 export function transformText(value, props) {
+    //console.log(props.modificationOptions);
     let toBeTransformed = value;
     if (typeof props.modificationOptions !== null || typeof props.modificationOptions !== undefined) {
         // text capitalization transformation

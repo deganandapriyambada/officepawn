@@ -136,21 +136,19 @@ function conversion() {
 // useState
 
 function characterReplacementOptions(props) {
-    [rules, setRules] = useState([
-        {
-            key: 1,
-            isActive: false
-        }
-    ]);
 
     function addRules() {
-        setRules((rules) => {
-            return [...rules, {
-                key: rules.length + 1,
-                isActive: false
-            }];
+        props.setModificationOption((rules) => {
+            return {
+                ...rules, replacement: [...rules.replacement, {
+                    key: rules.replacement.length + 1,
+                    target: null,
+                    value: null
+                }]
+            };
         });
     }
+
 
     function removeRules(key) {
         console.log(key)
@@ -170,7 +168,7 @@ function characterReplacementOptions(props) {
             }, "Remove Rule");
     }
 
-    const replacementRuleList = rules.map((item) => {
+    const replacementRuleList = props.modificationOptions.replacement.map((item) => {
         return createElement('div', { key: item.key }, replacementOption(item.key, props), buttonRemove(item.key));
     })
     const buttonAdd = createElement('button',
