@@ -38,5 +38,5 @@ function ruleInputBox(key, text, props) {
             }
 
         }, null);
-    return createElement('span', null, text, inputText);
+    return createElement('div', null, createElement('div', null, text), createElement('div', null, inputText));
 }

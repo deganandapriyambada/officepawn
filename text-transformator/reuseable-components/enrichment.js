@@ -1,7 +1,7 @@
 import { createElement } from 'react'
 
 export function enrichmentOption(key, props) {
-    return createElement('div', { key: key }, ruleInputBox('Enrich With', key, props))
+    return createElement('div', { key: key }, ruleInputBox('enrich with', key, props))
 }
 
 function ruleInputBox(label, key, props) {
@@ -26,7 +26,9 @@ function ruleInputBox(label, key, props) {
             value: item.text
         }, item.text)
     }));
-    return createElement('span', null, positionDropDown, ruleInputText(key, props, "target"), label, ruleInputText(key, props, "value"));
+    return createElement(
+        'span', null, createElement('div', null, positionDropDown), 'character / word', createElement('div', null, ruleInputText(key, props, "target")), createElement('div', null, label), createElement('div', null, ruleInputText(key, props, "value"))
+    );
 }
 
 function ruleInputText(key, props, name) {

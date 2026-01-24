@@ -67,24 +67,26 @@ function enrichmentOptions(props) {
         return createElement('button',
             {
                 type: "submit",
+                className: "red-button",
                 onClick: (e) => {
                     removeRules(key);
                 }
-            }, "Remove Rule");
+            }, createIcon('minus-circle'), "Rule");
     }
 
 
-    const characterEnrichmentContainerTitle = createElement('div', null, 'Character Enrichment');
+    const characterEnrichmentContainerTitle = createElement('div', { className: "section-title" }, 'Enrichment');
     const enrichmentRules = props.modificationOptions.enrichment.map((item) => {
         return createElement('div', { key: item.key }, enrichmentOption(item.key, props), buttonRemove(item.key))
     });
     const buttonAdd = createElement('button',
         {
             type: "submit",
+            className: "green-button",
             onClick: (e) => {
                 addEnrichRule();
             }
-        }, "Add More Rule");
+        }, createIcon('plus-circle'), "Rule");
     return createElement('div', { className: `enrichment-container ${(props.modificationOptions.status.enrichment) ? "shown" : "hidden"}` }, characterEnrichmentContainerTitle, enrichmentRules, buttonAdd);
 
 }
@@ -124,10 +126,11 @@ function characterReplacementOptions(props) {
         return createElement('button',
             {
                 type: "submit",
+                className: "red-button",
                 onClick: (e) => {
                     removeRules(key);
                 }
-            }, "Remove Rule");
+            }, createIcon('minus-circle'), "Rule");
     }
 
     const replacementRuleList = props.modificationOptions.replacement.map((item) => {
@@ -136,11 +139,12 @@ function characterReplacementOptions(props) {
     const buttonAdd = createElement('button',
         {
             type: "submit",
+            className: "green-button",
             onClick: (e) => {
                 addRules();
             }
-        }, "Add More Rule");
-    const characterReplacementContainerTitle = createElement('div', null, 'Character replacement');
+        }, createIcon('plus-circle'), "Rule");
+    const characterReplacementContainerTitle = createElement('div', { className: "section-title" }, 'Character replacement');
     return createElement('div', { className: `replacement-container ${(props.modificationOptions.status.replacement) ? "shown" : "hidden"}` }, characterReplacementContainerTitle, replacementRuleList, buttonAdd);
 }
 
@@ -213,7 +217,7 @@ function visualOption(props) {
         );
     });
     const visualOptionsContainer = createElement('ul', { className: "horizontal-list" }, visualOptions);
-    const visualOptionsContainerTitle = createElement('div', null, 'visual options')
+    const visualOptionsContainerTitle = createElement('div', { className: "section-title" }, 'Visualization')
     return createElement('div', { className: `visualization-container ${(props.modificationOptions.status.visualization) ? "shown" : "hidden"}` }, visualOptionsContainerTitle, visualOptionsContainer);
 }
 
@@ -231,7 +235,7 @@ function inputText(props) {
     return createElement('textarea',
         {
             className: "inputArea",
-            rows: 5,
+            rows: 1,
             placeholder: getInput(props),
             onChange: (e) => {
                 updateInput(props, e.target.value)
@@ -280,7 +284,7 @@ function capitalizationSelectBox(props) {
             onChange: (e) => setCaptilization(e.target.value, props)
 
         }, capitalizationOptions);
-    const capitalizationContainerTitle = createElement('div', null, 'Capitalization');
+    const capitalizationContainerTitle = createElement('div', { className: "section-title" }, 'Capitalization');
     const capitalizationContainer = createElement('div', { className: `capitalization-container ${(props.modificationOptions.status.capitalization) ? "shown" : "hidden"}` }, capitalizationContainerTitle, captilizationSelectElement)
     return capitalizationContainer;
 }
@@ -296,11 +300,12 @@ function inputButton(props) {
         'button',
         {
             type: "button",
+            className: "purple-button",
             onClick: (e) => {
                 doTransform(props)
             }
         },
-        "Transform!")
+        "Transform Text! ")
 }
 
 
@@ -340,15 +345,15 @@ function outputVisualization() {
 
 
     }
-
-    const [input, setInput] = useState('Please input any text..!');
-    const [output, setOutput] = useState('Output')
+    const defaultText = "Please input any text..!";
+    const [input, setInput] = useState(defaultText);
+    const [output, setOutput] = useState(defaultText)
     const [modificationOptions, setModificationOption] = useState(listOfModifications);
 
     return createElement('div', { className: "visualizationOutput" },
         createElement(toggle, { modificationOptions, setModificationOption }),
         createSeparatorTitle('Input Text'),
-        createElement(inputText, { input, setInput }),
+        createElement('div', { className: "input-container" }, createElement(inputText, { input, setInput })),
         createSeparatorTitle('Modification Options'),
         createElement('div', { className: 'optionParameterContainer' },
             createElement(capitalizationSelectBox, { modificationOptions, setModificationOption }),
@@ -357,10 +362,11 @@ function outputVisualization() {
             createElement(enrichmentOptions, { modificationOptions, setModificationOption })
         ),
         createSeparatorTitle('Action'),
-        createElement(inputButton, { output, setOutput, input, modificationOptions }),
-        createElement('div', null,
-            createSeparatorTitle('Transformed Text'),
-            output
+        createElement('div', { className: "button-container" }, createElement(inputButton, { output, setOutput, input, modificationOptions })),
+        createSeparatorTitle('Transformed Text'),
+        createElement('div', { className: 'output-container' },
+
+            createElement('div', { className: 'output-box' }, output)
         )
     );
 }

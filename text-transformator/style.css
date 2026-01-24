@@ -23,10 +23,16 @@
     font-size: 1rem;
     color: #ff5757;
     font-weight: bold;
-    padding: 0.5rem 0 0.5rem 0;
+    padding: 1rem 0 1rem 0;
 }
 
-#text-transformator .toggle-container,
+#text-transformator .toggle-container {
+    border: 1px #3d3d3d solid;
+    border-radius: 0.5rem;
+    padding: 0.8rem;
+    box-sizing: border-box;
+}
+
 #text-transformator .input-type-container {
     margin: 0;
     padding: 0.5rem 0 0.5rem 0;
@@ -97,17 +103,24 @@
     background: #f0f0f0;
     width: 100%;
     border: 0;
+    box-sizing: border-box;
+    padding: 1rem;
     border-radius: 10px;
 }
 
 #text-transformator .optionParameterContainer {
     display: inline-flex;
     align-items: baseline;
+    width: 100%;
+    border: 1px #3d3d3d solid;
+    border-radius: 0.5rem;
+    padding: 0.8rem;
+    box-sizing: border-box;
 }
 
 #text-transformator .horizontal-list {
     margin: 0;
-    padding: 1rem 0 1rem 0;
+    padding: 0 0 1rem 0;
 }
 
 #text-transformator .horizontal-list li {
@@ -132,4 +145,110 @@
 
 #text-transformator .shown {
     display: inline-block;
+}
+
+
+#text-transformator .section-title {
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 1rem 0 1rem 0;
+}
+
+#text-transformator .enrichment-container,
+#text-transformator .replacement-container,
+#text-transformator .visualization-container,
+#text-transformator .capitalization-container {
+    width: 25%;
+    padding: 0 2rem 0px 0px;
+}
+
+#text-transformator .capitalization-container select {
+    width: 90%;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    border: 0.1rem #dadada solid;
+    border-radius: 0.5rem;
+}
+
+
+
+#text-transformator .enrichment-container select {
+    width: 120px;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    border: 0.1rem #dadada solid;
+    border-radius: 0.5rem;
+    margin: 0 0 0.5rem 0;
+}
+
+#text-transformator .replacement-container input[type="text"],
+#text-transformator .enrichment-container input[type="text"] {
+    width: 90%;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    border: 0.1rem #dadada solid;
+    border-radius: 0.5rem;
+    margin: 0.5rem 0 0.5rem 0;
+}
+
+#text-transformator .green-button {
+    margin: 1.5rem 0 0 0;
+    padding: 0.3rem 1rem 0.3rem 1rem;
+    color: white;
+    background: #00d54f;
+    border: none;
+    border-radius: 0.2rem;
+    cursor: pointer;
+
+}
+
+#text-transformator .red-button {
+    margin: 0.5rem 0 0.5rem 0;
+    padding: 0.3rem 1rem 0.3rem 1rem;
+    color: white;
+    background: #fd4949;
+    border: none;
+    border-radius: 0.2rem;
+    cursor: pointer;
+}
+
+#text-transformator button .fa {
+    padding-right: 1rem;
+}
+
+#text-transformator .purple-button {
+    display: flex;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+    color: white;
+    background: #ad5389;
+    background: linear-gradient(90deg,
+            #ff66c4 0%,
+            #5170ff 100%);
+    border: none;
+    box-shadow: 0px 3px 5px 0px #8b8b8b;
+    letter-spacing: 0.05em;
+    border-radius: 0.5rem;
+    margin: auto;
+}
+
+#text-transformator .button-container {
+    width: 100%;
+    text-align: center;
+}
+
+#text-transformator .input-container {
+    padding: 0;
+}
+
+
+#text-transformator .output-container {
+    width: 100%;
+    background: #fafafa;
+    border-radius: 0.5rem;
+    box-shadow: 0px 3px 5px 0px #dadada;
+}
+
+#text-transformator .output-box {
+    padding: 1rem;
+    font-size: 18px;
 }
