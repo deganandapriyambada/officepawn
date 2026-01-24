@@ -5,7 +5,7 @@
   "scripts": {
     "start": "esbuild app.js --bundle --outfile=app.dist.js --watch=forever & python -m http.server"
   },
-  "author": "",
+  "author": "Pipenpoof",
   "license": "ISC",
   "description": "",
   "dependencies": {

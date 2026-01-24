@@ -1,9 +1,9 @@
-#main-container {
+#text-transformator #main-container {
     max-width: 1140px;
     margin: auto;
 }
 
-.header-title {
+#text-transformator .header-title {
     font-size: 1.575rem;
     font-weight: bold;
     display: inline-block;
@@ -15,42 +15,42 @@
 }
 
 
-.header-title-desc {
+#text-transformator .header-title-desc {
     font-size: 1rem;
 }
 
-.separator-title {
+#text-transformator .separator-title {
     font-size: 1rem;
     color: #ff5757;
     font-weight: bold;
     padding: 0.5rem 0 0.5rem 0;
 }
 
-.toggle-container,
-.input-type-container {
+#text-transformator .toggle-container,
+#text-transformator .input-type-container {
     margin: 0;
     padding: 0.5rem 0 0.5rem 0;
 }
 
-.toggle-container li,
-.input-type-container li {
+#text-transformator .toggle-container li,
+#text-transformator .input-type-container li {
     display: inline-block;
     padding: 0 1rem 0 0;
     font-size: 1rem;
 }
 
-.switch {
+#text-transformator .switch {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
 }
 
-.switch input {
+#text-transformator .switch input {
     display: none;
 }
 
-.slider {
+#text-transformator .slider {
     cursor: pointer;
     position: relative;
     width: 36px;
@@ -60,7 +60,7 @@
     border-radius: 34px;
 }
 
-.slider::before {
+#text-transformator .slider::before {
     content: "";
     position: absolute;
     height: 18px;
@@ -72,64 +72,64 @@
     border-radius: 50%;
 }
 
-.switch input:checked+.slider {
+#text-transformator .switch input:checked+.slider {
     background-color: #4caf50;
 }
 
-.switch input:checked+.slider::before {
+#text-transformator .switch input:checked+.slider::before {
     transform: translateX(22px);
 }
 
-.slider::before {
+#text-transformator .slider::before {
     width: 14px;
     height: 14px;
 }
 
-.switch input:checked+.slider::before {
+#text-transformator .switch input:checked+.slider::before {
     transform: translateX(16px);
 }
 
-.input-type-container>li>span.fa {
+#text-transformator .input-type-container>li>span.fa {
     padding-left: 1rem;
 }
 
-textarea.inputArea {
+#text-transformator textarea.inputArea {
     background: #f0f0f0;
     width: 100%;
     border: 0;
     border-radius: 10px;
 }
 
-.optionParameterContainer {
+#text-transformator .optionParameterContainer {
     display: inline-flex;
     align-items: baseline;
 }
 
-.horizontal-list {
+#text-transformator .horizontal-list {
     margin: 0;
     padding: 1rem 0 1rem 0;
 }
 
-.horizontal-list li {
+#text-transformator .horizontal-list li {
     display: inline-block;
     padding: 0 0.8rem 0 0;
 }
 
 
-.footer-menu {
+#text-transformator .footer-menu {
     padding: 1rem 0 1rem 0;
     margin: 0;
 }
 
-.footer-menu li {
+#text-transformator .footer-menu li {
     display: inline-block;
     padding: 0 0.8rem 0 0;
 }
 
-.hidden {
+#text-transformator .hidden {
     display: none;
 }
 
-.shown {
+#text-transformator .shown {
     display: inline-block;
 }

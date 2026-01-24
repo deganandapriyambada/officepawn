@@ -6,12 +6,14 @@ import { HeaderMenu } from './header';
 import { OutputVisualization } from './content';
 import { FooterMenu } from './footer';
 
-document.body.innerHTML = '<div id="main-container"></div>'
+document.body.innerHTML = '<div id="text-transformator"></div>'
 
 function Layout() {
     return createElement(
         'div',
-        null,
+        {
+            id: "main-container"
+        },
         createElement('div', { id: "header-container" }, HeaderMenu),
         createElement(
             'div',
@@ -22,5 +24,5 @@ function Layout() {
     )
 }
 
-const mainContainer = createRoot(document.getElementById("main-container"));
+const mainContainer = createRoot(document.getElementById("text-transformator"));
 mainContainer.render(Layout())
