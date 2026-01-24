@@ -4,7 +4,7 @@ function footerOptions() {
     const availableFooterOptions = [
         {
             key: 1,
-            value: "Copyright  Pipenpoof"
+            value: "Copyright © Pipenpoof"
         }
     ];
     const listFooterMenu = availableFooterOptions.map((item) => {

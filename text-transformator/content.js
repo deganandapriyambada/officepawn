@@ -64,26 +64,35 @@ function inputType() {
 
 function enrichmentOptions(props) {
 
-    const [enrichRules, setEnrichRule] = useState([
-        {
-            key: 1
-        }
-    ]);
-
     function addEnrichRule() {
-        setEnrichRule(
+        props.setModificationOption(
             (prev) => {
-                return [...prev, {
-                    key: prev.length + 1
-                }]
+                return {
+                    ...prev,
+                    enrichment: [
+                        ...prev.enrichment,
+                        {
+                            key: prev.enrichment.length + 1,
+                            position: null,
+                            target: null,
+                            value: null
+                        }
+                    ]
+                }
             }
         )
     }
 
     function removeRules(key) {
-        setEnrichRule((prevRules) =>
-            prevRules.filter((rule, index) => rule.key !== key
-            ));
+        console.log(key);
+        props.setModificationOption(
+            (prev) => {
+                return {
+                    ...prev,
+                    enrichment: prev.enrichment.filter((rule, index) => rule.key !== key)
+                }
+            }
+        );
     }
 
     function buttonRemove(key) {
@@ -98,7 +107,7 @@ function enrichmentOptions(props) {
 
 
     const characterEnrichmentContainerTitle = createElement('div', null, 'Character Enrichment');
-    const enrichmentRules = enrichRules.map((item) => {
+    const enrichmentRules = props.modificationOptions.enrichment.map((item) => {
         return createElement('div', { key: item.key }, enrichmentOption(item.key, props), buttonRemove(item.key))
     });
     const buttonAdd = createElement('button',
