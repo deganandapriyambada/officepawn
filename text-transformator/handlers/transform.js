@@ -1,7 +1,7 @@
 import { createElement } from "react";
 
 export function transformText(value, props) {
-    //console.log(props.modificationOptions);
+    console.log(props.modificationOptions);
     let toBeTransformed = value;
     if (typeof props.modificationOptions !== null || typeof props.modificationOptions !== undefined) {
         // text capitalization transformation
@@ -64,7 +64,6 @@ function capitalize(input, type) {
 }
 
 function visualFormat(input, options) {
-    console.log(options);
     let output = input;
     if (options.bold) {
         output = createElement('b', null, output)

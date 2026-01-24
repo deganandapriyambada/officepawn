@@ -10,7 +10,6 @@ function ruleInputBox(key, text, props) {
         parameter = key.split("_")[0];
         index = key.split("_")[1];
         toBeModificationOptions = { ...props.modificationOptions };
-        console.log(toBeModificationOptions)
         const updatedReplacement = toBeModificationOptions.replacement.map((rule) => {
             if (rule.key == index) {
                 return {
@@ -19,8 +18,6 @@ function ruleInputBox(key, text, props) {
                     value: (parameter == "with" ? value : rule.value)
                 };
             } else {
-                console.log("somthing wrong!!!")
-                console.log(rule);
                 return {
                     key: rule.key,
                     target: rule.target,

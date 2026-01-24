@@ -150,11 +150,19 @@ function characterReplacementOptions(props) {
     }
 
 
+
     function removeRules(key) {
-        console.log(key)
-        setRules((prevRules) =>
-            prevRules.filter((rule, index) => rule.key !== key
-            ));
+        props.setModificationOption((rules) => {
+
+            return {
+                ...rules,
+                replacement: rules.replacement.filter((rule, index) =>
+                    rule.key !== key
+                )
+            }
+
+        }
+        );
     }
 
     function buttonRemove(key) {
