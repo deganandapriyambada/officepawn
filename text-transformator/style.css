@@ -125,3 +125,11 @@ textarea.inputArea {
     display: inline-block;
     padding: 0 0.8rem 0 0;
 }
+
+.hidden {
+    display: none;
+}
+
+.shown {
+    display: inline-block;
+}

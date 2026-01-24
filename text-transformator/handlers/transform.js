@@ -6,22 +6,30 @@ export function transformText(value, props) {
     if (typeof props.modificationOptions !== null || typeof props.modificationOptions !== undefined) {
         // capitalization
         if (typeof props.modificationOptions.capitalization !== null || typeof props.modificationOptions.capitalization !== "undefined") {
-            toBeTransformed = capitalize(toBeTransformed, props.modificationOptions.capitalization);
-        }
-
-        // visualization
-        if (typeof props.modificationOptions.capitalization !== null || typeof props.modificationOptions.visualization !== "undefined") {
-            toBeTransformed = visualFormat(toBeTransformed, props.modificationOptions.visualization)
+            if (props.modificationOptions.status.capitalization) {
+                toBeTransformed = capitalize(toBeTransformed, props.modificationOptions.capitalization);
+            }
         }
 
         // replacement
         if (typeof props.modificationOptions.capitalization !== null || typeof props.modificationOptions.visualization !== "undefined") {
-            toBeTransformed = replacement(toBeTransformed, props.modificationOptions.replacement)
+            if (props.modificationOptions.status.replacement) {
+                toBeTransformed = replacement(toBeTransformed, props.modificationOptions.replacement)
+            }
         }
 
         // enrichment
         if (typeof props.modificationOptions.capitalization !== null || typeof props.modificationOptions.enrichment !== "undefined") {
-            toBeTransformed = enrichment(toBeTransformed, props.modificationOptions.enrichment)
+            if (props.modificationOptions.status.enrichment) {
+                toBeTransformed = enrichment(toBeTransformed, props.modificationOptions.enrichment)
+            }
+        }
+
+        // visualization
+        if (typeof props.modificationOptions.visualization !== null || typeof props.modificationOptions.visualization !== "undefined") {
+            if (props.modificationOptions.status.visualization) {
+                toBeTransformed = visualFormat(toBeTransformed, props.modificationOptions.visualization)
+            }
         }
     }
 

@@ -1,46 +1,14 @@
 import { createElement, useState, useEffect } from 'react';
 
-//components
-import { createToggle } from './util-components/toggle';
 import { createSeparatorTitle } from './util-components/separatortitle';
 import { createIcon } from './util-components/faicon';
 import { replacementOption } from './reuseable-components/replacement';
 import { enrichmentOption } from "./reuseable-components/enrichment";
+import { toggle } from './reuseable-components/option';
 
 // handler
 import { transformText } from './handlers/transform';
 
-function toggle() {
-    return createElement('ul', { className: "toggle-container" },
-        toggleList()
-    );
-}
-
-function toggleList() {
-    let availableToggle = [
-        {
-            key: 1,
-            value: "Visual modification"
-        },
-        {
-            key: 2,
-            value: "Character replacement"
-        },
-        {
-            key: 3,
-            value: "Enrichment"
-        },
-        {
-            key: 4,
-            value: "Capitalization"
-        },
-    ]
-    let allToggleElement = [];
-    for (var i = 0; i < availableToggle.length; i++) {
-        allToggleElement.push(createElement('li', { key: availableToggle[i].key }, createToggle(availableToggle[i].value)))
-    }
-    return allToggleElement
-}
 
 function inputType() {
     let inputType = [
@@ -117,7 +85,7 @@ function enrichmentOptions(props) {
                 addEnrichRule();
             }
         }, "Add More Rule");
-    return createElement('div', { className: "enrichment-container" }, characterEnrichmentContainerTitle, enrichmentRules, buttonAdd);
+    return createElement('div', { className: `enrichment-container ${(props.modificationOptions.status.enrichment) ? "shown" : "hidden"}` }, characterEnrichmentContainerTitle, enrichmentRules, buttonAdd);
 
 }
 
@@ -173,7 +141,7 @@ function characterReplacementOptions(props) {
             }
         }, "Add More Rule");
     const characterReplacementContainerTitle = createElement('div', null, 'Character replacement');
-    return createElement('div', { className: "replacement-container" }, characterReplacementContainerTitle, replacementRuleList, buttonAdd);
+    return createElement('div', { className: `replacement-container ${(props.modificationOptions.status.replacement) ? "shown" : "hidden"}` }, characterReplacementContainerTitle, replacementRuleList, buttonAdd);
 }
 
 
@@ -246,7 +214,7 @@ function visualOption(props) {
     });
     const visualOptionsContainer = createElement('ul', { className: "horizontal-list" }, visualOptions);
     const visualOptionsContainerTitle = createElement('div', null, 'visual options')
-    return createElement('div', { className: "visual-container" }, visualOptionsContainerTitle, visualOptionsContainer);
+    return createElement('div', { className: `visualization-container ${(props.modificationOptions.status.visualization) ? "shown" : "hidden"}` }, visualOptionsContainerTitle, visualOptionsContainer);
 }
 
 
@@ -313,7 +281,7 @@ function capitalizationSelectBox(props) {
 
         }, capitalizationOptions);
     const capitalizationContainerTitle = createElement('div', null, 'Capitalization');
-    const capitalizationContainer = createElement('div', { className: "capitalization-container" }, capitalizationContainerTitle, captilizationSelectElement)
+    const capitalizationContainer = createElement('div', { className: `capitalization-container ${(props.modificationOptions.status.capitalization) ? "shown" : "hidden"}` }, capitalizationContainerTitle, captilizationSelectElement)
     return capitalizationContainer;
 }
 
@@ -364,10 +332,10 @@ function outputVisualization() {
             }
         ],
         status: {
-            capitaliztion: true,
+            capitalization: true,
             visualization: true,
             replacement: true,
-            enrihcment: true
+            enrichment: true
         }
 
 
