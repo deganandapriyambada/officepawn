@@ -4,17 +4,25 @@ export function transformText(value, props) {
     console.log(props.modificationOptions);
     let toBeTransformed = value;
     if (typeof props.modificationOptions !== null || typeof props.modificationOptions !== undefined) {
-        // text capitalization transformation
+        // capitalization
         if (typeof props.modificationOptions.capitalization !== null || typeof props.modificationOptions.capitalization !== "undefined") {
             toBeTransformed = capitalize(toBeTransformed, props.modificationOptions.capitalization);
         }
-    }
 
-    if (typeof props.modificationOptions !== null || typeof props.modificationOptions !== undefined) {
+        // visualization
         if (typeof props.modificationOptions.capitalization !== null || typeof props.modificationOptions.visualization !== "undefined") {
             toBeTransformed = visualFormat(toBeTransformed, props.modificationOptions.visualization)
         }
+
+        // replacement
+        if (typeof props.modificationOptions.capitalization !== null || typeof props.modificationOptions.visualization !== "undefined") {
+            toBeTransformed = replacement(toBeTransformed, props.modificationOptions.replacement)
+        }
+
+        // enrichment
+
     }
+
 
     return toBeTransformed;
 }
@@ -84,4 +92,18 @@ function visualFormat(input, options) {
         output = createElement('sub', null, output)
     }
     return output;
+}
+
+function replacement(input, options) {
+    output = String(input);
+    options.map((rule) => {
+        if (typeof rule.target !== null || typeof rule.target !== "undefined") {
+            output = output.replace(new RegExp(rule.target, "gi"), rule.value);
+        }
+    })
+    return output;
+}
+
+function enrichment(input, options) {
+
 }

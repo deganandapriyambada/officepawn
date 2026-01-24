@@ -117,32 +117,9 @@ function enrichmentOptions(props) {
                 addEnrichRule();
             }
         }, "Add More Rule");
-    return createElement('div', null, characterEnrichmentContainerTitle, enrichmentRules, buttonAdd);
+    return createElement('div', { className: "enrichment-container" }, characterEnrichmentContainerTitle, enrichmentRules, buttonAdd);
 
 }
-
-
-
-function optionParameter() {
-    return createElement('div', null,
-        inputType(),
-        //inputText(),
-        createSeparatorTitle('Transformation Parameter'),
-        createElement('div', { className: "optionParameterContainer" },
-            //visualOption(),
-            //characterReplacementOptions(),
-            //enrichmentOptions(),
-            //capitalizationSelectBox()
-        )
-
-    );
-}
-
-function conversion() {
-    return createElement('div', null, inputButton());
-}
-
-// useState
 
 function characterReplacementOptions(props) {
 
@@ -196,7 +173,7 @@ function characterReplacementOptions(props) {
             }
         }, "Add More Rule");
     const characterReplacementContainerTitle = createElement('div', null, 'Character replacement');
-    return createElement('div', null, characterReplacementContainerTitle, replacementRuleList, buttonAdd);
+    return createElement('div', { className: "replacement-container" }, characterReplacementContainerTitle, replacementRuleList, buttonAdd);
 }
 
 
@@ -269,7 +246,7 @@ function visualOption(props) {
     });
     const visualOptionsContainer = createElement('ul', { className: "horizontal-list" }, visualOptions);
     const visualOptionsContainerTitle = createElement('div', null, 'visual options')
-    return createElement('div', null, visualOptionsContainerTitle, visualOptionsContainer);
+    return createElement('div', { className: "visual-container" }, visualOptionsContainerTitle, visualOptionsContainer);
 }
 
 
@@ -336,7 +313,7 @@ function capitalizationSelectBox(props) {
 
         }, capitalizationOptions);
     const capitalizationContainerTitle = createElement('div', null, 'Capitalization');
-    const capitalizationContainer = createElement('div', null, capitalizationContainerTitle, captilizationSelectElement)
+    const capitalizationContainer = createElement('div', { className: "capitalization-container" }, capitalizationContainerTitle, captilizationSelectElement)
     return capitalizationContainer;
 }
 
@@ -385,7 +362,15 @@ function outputVisualization() {
                 target: null,
                 value: null
             }
-        ]
+        ],
+        status: {
+            capitaliztion: true,
+            visualization: true,
+            replacement: true,
+            enrihcment: true
+        }
+
+
     }
 
     const [input, setInput] = useState('Please input any text..!');
@@ -393,6 +378,7 @@ function outputVisualization() {
     const [modificationOptions, setModificationOption] = useState(listOfModifications);
 
     return createElement('div', { className: "visualizationOutput" },
+        createElement(toggle, { modificationOptions, setModificationOption }),
         createSeparatorTitle('Input Text'),
         createElement(inputText, { input, setInput }),
         createSeparatorTitle('Modification Options'),
@@ -411,7 +397,4 @@ function outputVisualization() {
     );
 }
 
-export const Toggle = toggle();
-export const OptionParameter = optionParameter();
-export const Conversion = conversion();
 export const OutputVisualization = outputVisualization;
