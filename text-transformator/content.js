@@ -358,7 +358,7 @@ function outputVisualization() {
         enrichment: [
             {
                 key: 1,
-                position: null,
+                position: 'before',
                 target: null,
                 value: null
             }

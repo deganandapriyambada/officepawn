@@ -20,7 +20,9 @@ export function transformText(value, props) {
         }
 
         // enrichment
-
+        if (typeof props.modificationOptions.capitalization !== null || typeof props.modificationOptions.enrichment !== "undefined") {
+            toBeTransformed = enrichment(toBeTransformed, props.modificationOptions.enrichment)
+        }
     }
 
 
@@ -72,7 +74,7 @@ function capitalize(input, type) {
 }
 
 function visualFormat(input, options) {
-    let output = input;
+    let output = String(input);
     if (options.bold) {
         output = createElement('b', null, output)
     }
@@ -97,13 +99,27 @@ function visualFormat(input, options) {
 function replacement(input, options) {
     output = String(input);
     options.map((rule) => {
-        if (typeof rule.target !== null || typeof rule.target !== "undefined") {
-            output = output.replace(new RegExp(rule.target, "gi"), rule.value);
+        if ((typeof rule.target !== "undefined") && (typeof rule.value !== "undefined")) {
+            if (rule.target !== '' && rule.value !== '') {
+                output = output.replace(new RegExp(rule.target, "gi"), rule.value);
+            }
         }
     })
     return output;
 }
 
 function enrichment(input, options) {
-
+    output = String(input);
+    options.map((rule) => {
+        if ((typeof rule.position !== "undefined") && (typeof rule.target !== "undefined") && (typeof rule.value !== "undefined")) {
+            if (rule.target !== '' && rule.value !== '') {
+                if (rule.position == "before") {
+                    output = output.replace(new RegExp(rule.target, "gi"), rule.value + rule.target);
+                } else {
+                    output = output.replace(new RegExp(rule.target, "gi"), rule.target + rule.value);
+                }
+            }
+        }
+    })
+    return output;
 }
