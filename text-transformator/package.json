@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "esbuild app.js --bundle --outfile=app.dist.js --watch=forever & python -m http.server"
+    "start": "esbuild app.js --bundle --outfile=app.dist.js --watch=forever & python -m http.server",
+    "build": "esbuild app.js --bundle --minify --sourcemap --outfile=dist/text-transformator.dist.js"
   },
   "author": "Pipenpoof",
   "license": "ISC",
-  "description": "",
+  "description": "text-transformator using vanilla reactjs",
   "dependencies": {
     "react": "^19.2.3",
     "react-dom": "^19.2.3"
