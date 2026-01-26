@@ -6,8 +6,6 @@ import { HeaderMenu } from './header';
 import { OutputVisualization } from './content';
 import { FooterMenu } from './footer';
 
-document.body.innerHTML = '<div id="text-transformator"></div>'
-
 function Layout() {
     return createElement(
         'div',
