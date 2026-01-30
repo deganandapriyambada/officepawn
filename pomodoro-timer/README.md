@@ -1,0 +1,1 @@
+stack: js vanilla react + JSX + TanStack query + No Redux

@@ -1,0 +1,1 @@
+stack: typescript+vanilla react+vite+redux+TSX+tanstack+query
