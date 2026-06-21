@@ -7,13 +7,16 @@ public class PresetResponse {
     private int workDuration;
     private int shortBreakDuration;
     private int longBreakDuration;
+    private int iterationCounter;
 
-    public PresetResponse(String name, String alarm, int workDuration, int shortBreakDuration, int longBreakDuration) {
+    public PresetResponse(String name, String alarm, int workDuration, int shortBreakDuration, int longBreakDuration,
+            int iterationCounter) {
         this.name = name;
         this.alarm = alarm;
         this.workDuration = workDuration;
         this.shortBreakDuration = shortBreakDuration;
         this.longBreakDuration = longBreakDuration;
+        this.iterationCounter = iterationCounter;
     }
 
     public String getName() {
@@ -34,6 +37,10 @@ public class PresetResponse {
 
     public int getLongBreakDuration() {
         return this.longBreakDuration;
+    }
+
+    public int getIterationCounter() {
+        return this.iterationCounter;
     }
 
 }

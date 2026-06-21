@@ -11,7 +11,7 @@ public class Preset {
 
     @GetMapping("/preset")
     public PresetResponse preset() {
-        return new PresetResponse("Work", "chipping bird", 5, 5, 5);
+        return new PresetResponse("Normal Work", "chipping bird", 5, 5, 5, 4);
     }
 
 }
