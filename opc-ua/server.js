@@ -7,12 +7,7 @@ const {
 async function main() {
     const server = new OPCUAServer({
         port: 4840,
-        resourcePath: "/test",
-        buildInfo: {
-            productName: "test",
-            buildNumber: "1",
-            buildDate: new Date()
-        }
+        resourcePath: "/test"
     });
 
     await server.initialize();
@@ -20,30 +15,47 @@ async function main() {
     const addressSpace = server.engine.addressSpace;
     const namespace = addressSpace.getOwnNamespace();
 
-    let pressureReadings = 25;
+    let pressure = 25;
 
-    namespace.addVariable({
+    const pressureNode = namespace.addVariable({
         organizedBy: addressSpace.rootFolder.objects,
         browseName: "pressure",
         nodeId: "ns=1;s=pressure",
-        dataType: "Double",
-        minimumSamplingInterval: 1000,
+        dataType: DataType.Double,
         value: {
             get: () =>
                 new Variant({
                     dataType: DataType.Double,
-                    value: pressureReadings
+                    value: pressure
                 })
         }
     });
 
+    // Set initial value
+    pressureNode.setValueFromSource(
+        new Variant({
+            dataType: DataType.Double,
+            value: pressure
+        })
+    );
+
+    setInterval(() => {
+        pressure = Math.floor(Math.random() * 1000) + 1;
+
+        pressureNode.setValueFromSource(
+            new Variant({
+                dataType: DataType.Double,
+                value: pressure
+            })
+        );
+
+        console.log("Updated pressure:", pressure);
+    }, 1000);
+
     await server.start();
 
-    console.log("OPC UA Server is running");
+    console.log("Server running at:");
+    console.log(server.getEndpointUrl());
 }
 
-try {
-    main();
-} catch (err) {
-    console.log(err);
-}
+main().catch(console.error);

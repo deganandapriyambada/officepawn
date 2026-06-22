@@ -1,6 +1,9 @@
 const {
     OPCUAClient,
-    AttributeIds
+    AttributeIds,
+    TimestampsToReturn,
+    ClientSubscription,
+    ClientMonitoredItem
 } = require("node-opcua");
 
 async function main() {
@@ -10,31 +13,58 @@ async function main() {
         endpointMustExist: false
     });
 
-    try {
-        await client.connect(endpointUrl);
-        console.log("Connected");
+    await client.connect(endpointUrl);
 
-        const session = await client.createSession();
-        console.log("Session created");
+    const session = await client.createSession();
 
-        const dataValue = await session.read({
+    const subscription = ClientSubscription.create(session, {
+        requestedPublishingInterval: 1000,
+        requestedLifetimeCount: 100,
+        requestedMaxKeepAliveCount: 10,
+        maxNotificationsPerPublish: 100,
+        publishingEnabled: true,
+        priority: 1
+    });
+
+    subscription.on("started", () => {
+        console.log(
+            "Subscription started:",
+            subscription.subscriptionId
+        );
+    });
+
+    subscription.on("terminated", () => {
+        console.log("Subscription terminated");
+    });
+
+    const monitoredItem = ClientMonitoredItem.create(
+        subscription,
+        {
             nodeId: "ns=1;s=pressure",
             attributeId: AttributeIds.Value
-        });
+        },
+        {
+            samplingInterval: 1000,
+            discardOldest: true,
+            queueSize: 10
+        },
+        TimestampsToReturn.Both
+    );
 
-        console.log("Pressure:", dataValue.value.value);
+    monitoredItem.on("changed", (dataValue) => {
+        console.log(
+            "Pressure changed:",
+            dataValue.value.value
+        );
+    });
 
+    // Keep process alive
+    process.on("SIGINT", async () => {
+        await subscription.terminate();
         await session.close();
         await client.disconnect();
-
-        console.log("Disconnected");
-    } catch (err) {
-        console.error(err);
-    }
+        process.exit(0);
+    });
 }
 
-try {
-    main();
-} catch (err) {
-    console.log(err);
-}
+main().catch(console.error);
